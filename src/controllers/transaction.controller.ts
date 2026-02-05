@@ -12,7 +12,7 @@ export const createTransaction = async (
     console.log(transactionData, req?.file?.path);
 
     if (req.file) {
-      transactionData.paymentProof = req.file.path;
+      transactionData.paymentProof = req.file.path.replace(/\\/g, "/");
     } else {
       res.status(400).json({ message: "Payment proof is required" });
       return;
