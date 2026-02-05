@@ -9,7 +9,7 @@ export const createCategory = async (
     const categoryData = req.body;
 
     if (req.file) {
-      categoryData.imageUrl = req.file.path;
+      categoryData.imageUrl = req.file.path.replace(/\\/g, "/");
     }
     const category = new Category(categoryData);
     await category.save();
@@ -55,7 +55,7 @@ export const updateCategory = async (
   try {
     const categoryData = req.body;
     if (req.file) {
-      categoryData.imageUrl = req.file.path;
+      categoryData.imageUrl = req.file.path.replace(/\\/g, "/");
     }
     const category = await Category.findByIdAndUpdate(
       req.params.id,

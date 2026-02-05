@@ -9,7 +9,12 @@ export const createProduct = async (
     const productData = req.body;
 
     if (req.file) {
-      productData.imageUrl = req.file.path;
+      productData.imageUrl = req.file.path.replace(/\\/g, "/");
+    }
+
+    if (productData.categoryId) {
+      productData.category = productData.categoryId;
+      delete productData.categoryId;
     }
 
     const product = new Product(productData);
@@ -57,7 +62,7 @@ export const updateProduct = async (
   try {
     const productData = req.body;
     if (req.file) {
-      productData.imageUrl = req.file.path;
+      productData.imageUrl = req.file.path.replace(/\\/g, "/");
     }
     const product = await Product.findByIdAndUpdate(
       req.params.id,
